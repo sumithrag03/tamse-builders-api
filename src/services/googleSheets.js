@@ -10,9 +10,9 @@ const fs = require("fs");
 let auth;
 
 
-// ----------------------------------------
+// ========================================
 // Production: Render
-// ----------------------------------------
+// ========================================
 
 if (process.env.GOOGLE_SERVICE_ACCOUNT_BASE64) {
 
@@ -33,9 +33,9 @@ if (process.env.GOOGLE_SERVICE_ACCOUNT_BASE64) {
 }
 
 
-// ----------------------------------------
+// ========================================
 // Local Development
-// ----------------------------------------
+// ========================================
 
 else {
 
@@ -89,7 +89,10 @@ async function addEnquiryToSheet(enquiry) {
 
     const values = [[
 
-        new Date().toLocaleString("en-IN"),
+        // India Standard Time (IST)
+        new Date().toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata"
+        }),
 
         enquiry.fullName,
 
@@ -109,6 +112,10 @@ async function addEnquiryToSheet(enquiry) {
 
     ]];
 
+
+    // ========================================
+    // Append enquiry to Google Sheet
+    // ========================================
 
     await sheets.spreadsheets.values.append({
 
